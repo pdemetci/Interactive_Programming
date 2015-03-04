@@ -4,23 +4,23 @@ class PuzzleGame:
         """ create the view and controllers """
         pass
 
-    def start():
+    def start(self):
         """ start the game """
         pass
 
-    def stop():
+    def stop(self):
         """ stop the game """
         pass
 
-    def main():
+    def main(self):
         while True:
             controllerUpdate()
             viewUpdate()
 
-    def controllerUpdate():
+    def controllerUpdate(self):
         """ handle all the controller events """
         pass
         
-    def viewUpdate():
+    def viewUpdate(self):
         """ redraw the view """
         pass 
