@@ -4,6 +4,6 @@ class BaseView:
         """ setup the view """
         pass
 
-    def update(self, gameState):
-        """ redraw the view to show the new game state """
+    def notify(self, event):
+        """ update the view based on the event """
         pass
