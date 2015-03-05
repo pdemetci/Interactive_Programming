@@ -2,13 +2,22 @@ import test_helper
 import unittest
 from unittest import TestCase
 
+from event_manager import EventManager
+
 class EventManagerTest(TestCase):
 
     def testRegisterListener(self):
-        self.fail("not implemented")
+        em = EventManager()
+        em.registerListener("foo")
+        self.assertTrue("foo" in em.listeners)
 
     def testUnregisterListener(self):
-        self.fail("not implemented")
+        em = EventManager()
+        em.registerListener("foo")
+        self.assertTrue("foo" in em.listeners)
+
+        em.unregisterListener("foo")
+        self.assertFalse("foo" in em.listeners)
 
     def testPost(self):
         self.fail("not implemented")
