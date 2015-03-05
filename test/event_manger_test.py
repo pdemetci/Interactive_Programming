@@ -7,7 +7,7 @@ class EventManagerTest(TestCase):
     def testRegisterListener(self):
         self.fail("not implemented")
 
-    def testUnregisterListern(self):
+    def testUnregisterListener(self):
         self.fail("not implemented")
 
     def testPost(self):

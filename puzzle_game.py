@@ -9,13 +9,8 @@ class PuzzleGame:
     def stop(self):
         """ stop the game """
 
-    def main(self):
-        while True:
-            controllerUpdate()
-            viewUpdate()
+    def notify(self, event):
+        """ respond to events """
 
-    def controllerUpdate(self):
-        """ handle all the controller events """
-        
-    def viewUpdate(self):
-        """ redraw the view """
+    def switchView(nextView):
+        """ change the active view """
