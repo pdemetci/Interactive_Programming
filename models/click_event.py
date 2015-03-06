@@ -1,6 +1,8 @@
-import base_event
+from base_event import BaseEvent
 
 class ClickEvent(BaseEvent):
     
-    def __init__(self, row, col):
-        """ create click event """ 
+    def __init__(self, name, row, col):
+        self.name = name
+        self.row = row
+        self.col = col
