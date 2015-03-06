@@ -1,0 +1,27 @@
+.
+├── controllers
+│   ├── base_controller.py     --> superclass of all controllers; sends events to event manager
+│   └── mouse_controller.py    --> child class of base_controller; handles mouse events
+├── files.txt
+├── main.py                    --> the main file that starts the game
+├── models
+│   ├── base_event.py          --> superclass of all events 
+│   ├── click_event.py         --> child class of base_event; keeps track click locations
+│   ├── event_manager.py       --> passes messages between the controllers, models, and views
+│   ├── event_manager.pyc
+│   ├── game_grid.py           --> child class of grid; keeps track of the game colors
+│   ├── grid.py                --> superclass of the grids
+│   ├── grid.pyc
+│   └── target_grid.py         --> child class of grid; keeps track of the goal colors
+├── puzzle_game.py             --> holds all the models, views, and controllers
+├── puzzle_game.pyc
+├── README.md
+├── test
+│   ├── event_manger_test.py
+│   ├── grid_test.py
+│   ├── test_helper.py
+│   └── test_helper.pyc
+└── views
+    ├── base_fragment.py       --> a view within a view
+    ├── base_view.py           --> superclass of views; displays the game
+    └── game_grid_fragment.py  --> child class of base_fragment; displays the game grid
