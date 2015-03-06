@@ -1,6 +1,6 @@
-import grid
+from grid import Grid
 
-class GameGrid:
+class GameGrid(Grid):
     """ the game grid manages a grid based on events """
 
     def __init__(self, row, col):
