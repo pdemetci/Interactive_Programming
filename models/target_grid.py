@@ -5,3 +5,6 @@ class TargetGrid(Grid):
 
     def fill_grid(self, grid):
         """ fills the grid with the a random target state """
+
+    def notify(self, event):
+        """ handle events """

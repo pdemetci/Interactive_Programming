@@ -25,8 +25,8 @@ class PuzzleGame:
         self.eventManager = EventManager()
         self.eventManager.registerListener(self)
 
-        self.gameGrid = GameGrid(self.ROWS, self.COLS)
-        self.targetGrid = TargetGrid(self.ROWS, self.COLS)
+        self.gameGrid = GameGrid(self.eventManager, self.ROWS, self.COLS)
+        self.targetGrid = TargetGrid(self.eventManager, self.ROWS, self.COLS)
 
         self.gameView = GameView()
         self.menuView = MenuView()
