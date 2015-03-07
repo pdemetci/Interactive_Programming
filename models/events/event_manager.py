@@ -17,5 +17,6 @@ class EventManager:
     def post(self, event):
         """ send an event notification to all listeners """
         for listener in self.listeners:
+            print event, "--->", listener
             listener.notify(event)
 
