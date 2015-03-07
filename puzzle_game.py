@@ -11,6 +11,8 @@ from render_event import RenderEvent
 from get_grid_click_event import GetGridClickEvent
 from draw_game_event import DrawGameEvent
 from grid_click_event import GridClickEvent
+from increment_clicks_event import IncrementClicksEvent
+from decrement_clicks_event import DecrementClicksEvent
 
 class PuzzleGame:
     GAME_WIDTH = 1200
@@ -18,6 +20,8 @@ class PuzzleGame:
 
     ROWS = 5
     COLS = 5
+
+    MAX_CLICKS = 5
 
     def __init__(self):
         """ create the view and controllers """
@@ -27,6 +31,7 @@ class PuzzleGame:
 
         self.gameGrid = GameGrid(self.eventManager, self.ROWS, self.COLS)
         self.targetGrid = TargetGrid(self.eventManager, self.ROWS, self.COLS)
+        self.clicks = self.MAX_CLICKS
 
         self.gameView = GameView()
         self.menuView = MenuView()
@@ -56,7 +61,7 @@ class PuzzleGame:
                 return
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                clickEvent = ClickEvent(x, y)
+                clickEvent = ClickEvent(x, y, self.clicks)
                 self.eventManager.post(clickEvent)
 
 
@@ -73,6 +78,12 @@ class PuzzleGame:
             surface = self.surface
             gameGrid = self.gameGrid
             nextEvent = GridClickEvent(surface, gameGrid, event.x, event.y)
+
+        elif type(event) is IncrementClicksEvent:
+            self.clicks = min(self.clicks + 1, self.MAX_CLICKS)
+
+        elif type(event) is DecrementClicksEvent:
+            self.clicks = max(self.clicks - 1, 0)
 
         if nextEvent:
             self.eventManager.post(nextEvent)

@@ -17,7 +17,6 @@ class GridFragment(BaseFragment):
 
     def draw(self, surface, grid, cellGrid):
         """ draws the target grid """
-        grid.set(3, 3, 6)
         for row in range(grid.rows):
             for col in range(grid.cols):
                 val = grid.get(row, col)

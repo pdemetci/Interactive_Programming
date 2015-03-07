@@ -34,7 +34,8 @@ class GameView(BaseView):
             self.draw(surface, gameGrid, targetGrid)
 
         elif type(event) is ClickEvent:
-            nextEvent = GetGridClickEvent(event.x, event.y)
+            if event.clicksLeft > 0:
+                nextEvent = GetGridClickEvent(event.x, event.y)
 
         elif type(event) is GridClickEvent:
             surface = event.surface

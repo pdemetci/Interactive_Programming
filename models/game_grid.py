@@ -1,6 +1,7 @@
 from grid import Grid
 from render_event import RenderEvent
 from change_cell_event import ChangeCellEvent
+from decrement_clicks_event import DecrementClicksEvent
 
 class GameGrid(Grid):
     """ the game grid manages a grid based on events """
@@ -27,14 +28,11 @@ class GameGrid(Grid):
 
     def notify(self, event):
         """ respond to events """
-        nextEvent = None
         if type(event) is ChangeCellEvent:
             row = event.row
             col = event.col
 
             self.handleClick(row, col)
 
-            nextEvent = RenderEvent()
-
-        if nextEvent:
-            self.eventManager.post(nextEvent)
+            self.eventManager.post(DecrementClicksEvent())
+            self.eventManager.post(RenderEvent())
