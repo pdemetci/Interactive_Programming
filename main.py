@@ -1,8 +1,12 @@
+import setup
 import pygame
-import puzzle_game
+from puzzle_game import PuzzleGame
 
 def main():
     pygame.init()
 
     puzzleGame = PuzzleGame()
     puzzleGame.start()
+
+if __name__ == "__main__":
+    main()
