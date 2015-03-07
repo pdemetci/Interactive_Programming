@@ -5,16 +5,14 @@ class TargetGrid(Grid):
 
     def __init__(self, row, col):
         """ create the target grid """
-    	self.row = row
-    	self.col = col
-    	self.grid = Grid(self.row, self.col)
+        super(TargetGrid, self).__init__(row, col)
     	self.fill_grid()
 
-    def fill_grid(self, grid):
+    def fill_grid(self):
         """ fills the grid with the a random target state """
-    	for i in range(self.row):
-    		for x in range(self.col):
-    			self.grid.set(i,x,2)
+    	for i in range(self.rows):
+    		for x in range(self.cols):
+    			self.set(i,x,2)
 
     def notify(self, event):
         """ handle events """

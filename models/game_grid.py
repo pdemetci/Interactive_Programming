@@ -6,6 +6,13 @@ from decrement_clicks_event import DecrementClicksEvent
 class GameGrid(Grid):
     """ the game grid manages a grid based on events """
 
+    MAX_VALUES = 7
+
+    def __init__(self, eventManager, row, col):
+        super(GameGrid, self).__init__(row, col)
+        self.eventManager = eventManager
+        self.eventManager.registerListener(self)
+
     def handleClick(self, row, col):
         cells = self.getChangedCells(row, col)
         for cell in cells:

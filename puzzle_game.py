@@ -30,7 +30,7 @@ class PuzzleGame:
         self.eventManager.registerListener(self)
 
         self.gameGrid = GameGrid(self.eventManager, self.ROWS, self.COLS)
-        self.targetGrid = TargetGrid(self.eventManager, self.ROWS, self.COLS)
+        self.targetGrid = TargetGrid(self.ROWS, self.COLS)
         self.clicks = self.MAX_CLICKS
 
         self.gameView = GameView()
