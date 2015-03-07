@@ -72,7 +72,8 @@ class PuzzleGame:
             surface = self.surface
             gameGrid = self.gameGrid
             targetGrid = self.targetGrid
-            nextEvent = DrawGameEvent(surface, gameGrid, targetGrid)
+            clicks = self.clicks
+            nextEvent = DrawGameEvent(surface, gameGrid, targetGrid, clicks)
 
         elif type(event) is GetGridClickEvent:
             surface = self.surface
