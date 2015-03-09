@@ -8,6 +8,8 @@ from target_grid_sizer import TargetGridSizer
 from measurements import *
 
 class GameView(BaseView):
+    BORDER_SIZE = 4
+    BORDER_COLOR = pygame.Color("black")
 
     def __init__(self):
         """ creates the game view """
@@ -26,6 +28,8 @@ class GameView(BaseView):
         self.gameGridFragment.draw(surface, gameGrid, gameGridSizer)
         self.targetGridFragment.draw(surface, targetGrid, targetGridSizer)
         self.drawMenuBar(surface, clicks)
+        self.drawBorder(surface)
+        pygame.display.update()
 
     def handleClick(self, puzzleGame, x, y):
         if puzzleGame.clicks == 0:
@@ -49,16 +53,16 @@ class GameView(BaseView):
         height = MENU_BAR_HEIGHT_RATIO * surface.get_height()
 
         color = pygame.Color("red")
-        borderColor = pygame.Color("black")
-        borderSize = 4
         rect = pygame.rect.Rect(gridX, gridY, width, height)
 
         surface.fill(color, rect) 
-        pygame.draw.rect(surface, borderColor, rect, borderSize)
+        pygame.draw.rect(surface, self.BORDER_COLOR, rect, self.BORDER_SIZE)
 
         self.drawMenuBarClicks(surface, clicks)
 
-        pygame.display.update()
+    def drawBorder(self, surface):
+        borderRect = surface.get_rect()
+        pygame.draw.rect(surface, self.BORDER_COLOR, borderRect, 2 * self.BORDER_SIZE)
 
     def drawMenuBarClicks(self, surface, clicks):
         font = pygame.font.SysFont("Arial", 40)
