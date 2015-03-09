@@ -12,6 +12,11 @@ class GameGrid(Grid):
         for cell in cells:
             self.incrementCell(*cell)
 
+    def undoGridClick(self, row, col):
+        cells = self.getChangedCells(row, col)
+        for cell in cells:
+            self.decrementCell(*cell)
+
     def getChangedCells(self, row, col):
         cells = []
         cells.append((row, col))
@@ -25,4 +30,9 @@ class GameGrid(Grid):
     def incrementCell(self, row, col):
         prevVal = self.get(row, col)
         nextVal = (prevVal + 1) % self.MAX_VALUES
+        self.set(row, col, nextVal)
+
+    def decrementCell(self, row, col):
+        prevVal = self.get(row, col)
+        nextVal = (prevVal - 1) % self.MAX_VALUES
         self.set(row, col, nextVal)

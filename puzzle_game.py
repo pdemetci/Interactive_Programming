@@ -22,6 +22,7 @@ class PuzzleGame:
         self.gameGrid = GameGrid(self.ROWS, self.COLS)
         self.targetGrid = TargetGrid(self.ROWS, self.COLS)
         self.clicks = self.MAX_CLICKS
+        self.clickHistory = []
 
         self.gameView = GameView()
         self.menuView = MenuView()
@@ -64,18 +65,28 @@ class PuzzleGame:
     def handleClick(self, x, y):
         self.activeView.handleClick(self, x, y)
 
-    def handleGameViewClick(self, x, y):
+    def handleGameGridClick(self, x, y):
         if self.clicks == 0:
             return
 
         gameGridSizer = GameGridSizer(self.surface, self.gameGrid)
         rowcol = gameGridSizer.getRowCol(x, y)
         if rowcol:
+            self.clickHistory.append(rowcol)
             self.handleGridClick(*rowcol)
 
     def handleGridClick(self, row, col):
         self.gameGrid.handleGridClick(row, col)
         self.clicks = self.clicks - 1
+        self.drawGame()
+
+    def undoGameGridClick(self):
+        if not self.clickHistory:
+            return
+
+        lastClick = self.clickHistory.pop() 
+        self.gameGrid.undoGridClick(*lastClick)
+        self.clicks = self.clicks + 1
         self.drawGame()
 
     def switchView(self, nextView):

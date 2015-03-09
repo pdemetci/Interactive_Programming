@@ -14,6 +14,9 @@ class GridSizer(object):
         self.cellWidth = self.width / float(self.cols)
         self.cellHeight = self.height / float(self.rows)
 
+    def getGridRect(self):
+        return self.rect
+
     def getCellRect(self, row, col):
         """ gets the rect for a cell """
         x0, y0 = self.rect.topleft
