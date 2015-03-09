@@ -32,7 +32,7 @@ class PuzzleGame:
         """ start the game """
         self.done = False
         self.switchView(self.gameView)
-        self.surface = pygame.display.set_mode((self.GAME_WIDTH, self.GAME_HEIGHT))
+        self.surface = pygame.display.set_mode((self.GAME_WIDTH, self.GAME_HEIGHT), pygame.RESIZABLE)
         self.drawGame()
 
         while not self.done:
@@ -52,6 +52,11 @@ class PuzzleGame:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
                 self.handleClick(x, y)
+            elif event.type == pygame.VIDEORESIZE:
+                width = event.w
+                height = event.h
+                self.surface = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+                self.drawGame()
 
     def drawGame(self):
         self.activeView.draw(self)
