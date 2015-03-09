@@ -1,19 +1,13 @@
 from grid import Grid
-from render_event import RenderEvent
-from change_cell_event import ChangeCellEvent
-from decrement_clicks_event import DecrementClicksEvent
 
 class GameGrid(Grid):
-    """ the game grid manages a grid based on events """
-
+    """ the game grid manages a grid """
     MAX_VALUES = 7
 
-    def __init__(self, eventManager, row, col):
+    def __init__(self, row, col):
         super(GameGrid, self).__init__(row, col)
-        self.eventManager = eventManager
-        self.eventManager.registerListener(self)
 
-    def handleClick(self, row, col):
+    def handleGridClick(self, row, col):
         cells = self.getChangedCells(row, col)
         for cell in cells:
             self.incrementCell(*cell)
@@ -32,14 +26,3 @@ class GameGrid(Grid):
         prevVal = self.get(row, col)
         nextVal = (prevVal + 1) % self.MAX_VALUES
         self.set(row, col, nextVal)
-
-    def notify(self, event):
-        """ respond to events """
-        if type(event) is ChangeCellEvent:
-            row = event.row
-            col = event.col
-
-            self.handleClick(row, col)
-
-            self.eventManager.post(DecrementClicksEvent())
-            self.eventManager.post(RenderEvent())

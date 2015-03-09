@@ -2,101 +2,69 @@ import pygame
 
 from base_view import BaseView
 from grid_fragment import GridFragment
-from draw_game_event import DrawGameEvent
-from click_event import ClickEvent
-from grid_click_event import GridClickEvent
-from get_grid_click_event import GetGridClickEvent
 from grid_sizer import GridSizer
-from change_cell_event import ChangeCellEvent
+from game_grid_sizer import GameGridSizer
+from target_grid_sizer import TargetGridSizer
+from measurements import *
 
 class GameView(BaseView):
 
-	MENU_BAR_HEIGHT_RATIO	= 0.15
-	MENU_BAR_WIDTH_RATIO	 = 1
-	TARGET_GRID_HEIGHT_RATIO = 1 - MENU_BAR_HEIGHT_RATIO
-	TARGET_GRID_WIDTH_RATIO  = 0.5
-	GAME_GRID_HEIGHT_RATIO   = 1 - MENU_BAR_HEIGHT_RATIO
-	GAME_GRID_WIDTH_RATIO	= 0.5
+    def __init__(self):
+        """ creates the game view """
+        self.gameGridFragment = GridFragment()
+        self.targetGridFragment = GridFragment()
 
-	def __init__(self):
-		""" creates the game view """
-		self.gameGridFragment = GridFragment()
-		self.targetGridFragment = GridFragment()
+    def draw(self, puzzleGame):
+        surface    = puzzleGame.surface
+        gameGrid   = puzzleGame.gameGrid
+        targetGrid = puzzleGame.targetGrid
+        clicks     = puzzleGame.clicks
 
-	def draw(self, surface, gameGrid, targetGrid, clicks):
-		""" draw the game grid and target grid """
-		gameGridSizer = self.getGameGridSizer(surface, gameGrid)
-		targetGridSizer = self.getTargetGridSizer(surface, targetGrid)
+        gameGridSizer   = GameGridSizer(surface, gameGrid)
+        targetGridSizer = TargetGridSizer(surface, targetGrid)
 
-		self.gameGridFragment.draw(surface, gameGrid, gameGridSizer)
-		self.targetGridFragment.draw(surface, targetGrid, targetGridSizer)
-		self.drawMenuBar(surface, clicks)
+        self.gameGridFragment.draw(surface, gameGrid, gameGridSizer)
+        self.targetGridFragment.draw(surface, targetGrid, targetGridSizer)
+        self.drawMenuBar(surface, clicks)
 
-	def notify(self, event):
-		nextEvent = None
-		if type(event) is DrawGameEvent:
-			gameGrid = event.gameGrid
-			targetGrid = event.targetGrid
-			surface = event.surface
-			clicks = event.clicks
+    def handleClick(self, puzzleGame, x, y):
+        if puzzleGame.clicks == 0:
+            return
 
-			self.draw(surface, gameGrid, targetGrid, clicks)
+        rowcol = self.getClickRowCol(puzzleGame, x, y)
+        if rowcol:
+            puzzleGame.handleGridClick(*rowcol)
 
-		elif type(event) is ClickEvent:
-			if event.clicksLeft > 0:
-				nextEvent = GetGridClickEvent(event.x, event.y)
+    def getClickRowCol(self, puzzleGame, x, y):
+        surface  = puzzleGame.surface
+        gameGrid = puzzleGame.gameGrid
 
-		elif type(event) is GridClickEvent:
-			surface = event.surface
-			gameGrid = event.gameGrid
-			gameGridSizer = self.getGameGridSizer(surface, gameGrid)
+        gameGridSizer = GameGridSizer(surface, gameGrid)
+        return gameGridSizer.getRowCol(x, y)
 
-			rowcol = gameGridSizer.getRowCol(event.x, event.y)
+    def drawMenuBar(self, surface, clicks):
+        gridX  = 0
+        gridY  = 0
+        width  = MENU_BAR_WIDTH_RATIO * surface.get_width()
+        height = MENU_BAR_HEIGHT_RATIO * surface.get_height()
 
-			if rowcol:
-				row, col = rowcol
-				nextEvent = ChangeCellEvent(row, col)
+        color = pygame.Color("red")
+        borderColor = pygame.Color("black")
+        borderSize = 4
+        rect = pygame.rect.Rect(gridX, gridY, width, height)
 
-		if nextEvent:
-			self.eventManager.post(nextEvent)
+        surface.fill(color, rect) 
+        pygame.draw.rect(surface, borderColor, rect, borderSize)
 
-	def drawMenuBar(self, surface, clicks):
-		gridX  = 0
-		gridY  = 0
-		width  = self.MENU_BAR_WIDTH_RATIO * surface.get_width()
-		height = self.MENU_BAR_HEIGHT_RATIO * surface.get_height()
+        self.drawMenuBarClicks(surface, clicks)
 
-		color = pygame.Color("red")
-		borderColor = pygame.Color("black")
-		borderSize = 4
-		rect = pygame.rect.Rect(gridX, gridY, width, height)
+        pygame.display.update()
 
-		surface.fill(color, rect) 
-		pygame.draw.rect(surface, borderColor, rect, borderSize)
+    def drawMenuBarClicks(self, surface, clicks):
+        font = pygame.font.SysFont("Arial", 40)
+        text = font.render(str(clicks), True, pygame.Color("black"))
 
-		pygame.display.update()
-
-	def getGameGridSizer(self, surface, gameGrid):
-		""" gets a rectangular portion of the surface """
-		surfaceWidth, surfaceHeight = surface.get_size()
-
-		gridX	  = self.GAME_GRID_WIDTH_RATIO * surfaceWidth
-		gridY	  = self.MENU_BAR_HEIGHT_RATIO * surfaceHeight
-		gridWidth  = self.GAME_GRID_WIDTH_RATIO * surfaceWidth
-		gridHeight = self.GAME_GRID_HEIGHT_RATIO * surfaceHeight
-
-		boundsRect = pygame.Rect(gridX, gridY, gridWidth, gridHeight)
-		return GridSizer(gameGrid.rows, gameGrid.cols, boundsRect)
-		
-	def getTargetGridSizer(self, surface, targetGrid):
-		""" gets a rectangular portion of the surface """
-		surfaceWidth, surfaceHeight = surface.get_size()
-
-		gridX	  = 0
-		gridY	  = self.MENU_BAR_HEIGHT_RATIO * surfaceHeight
-		gridWidth  = self.TARGET_GRID_WIDTH_RATIO * surfaceWidth
-		gridHeight = self.TARGET_GRID_HEIGHT_RATIO * surfaceHeight
-
-		boundsRect = pygame.Rect(gridX, gridY, gridWidth, gridHeight)
-		return GridSizer(targetGrid.rows, targetGrid.cols, boundsRect)
-		
+        textRect = text.get_rect()
+        textRect.centerx = surface.get_rect().centerx
+        textRect.bottom = MENU_BAR_HEIGHT_RATIO * surface.get_height()
+        surface.blit(text, textRect)

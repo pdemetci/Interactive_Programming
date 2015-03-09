@@ -13,6 +13,3 @@ class TargetGrid(Grid):
     	for i in range(self.rows):
     		for x in range(self.cols):
     			self.set(i,x,2)
-
-    def notify(self, event):
-        """ handle events """
