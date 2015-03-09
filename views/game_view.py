@@ -16,6 +16,9 @@ class GameView(BaseView):
         self.gameGridFragment = GridFragment()
         self.targetGridFragment = GridFragment()
 
+    def handleClick(self, puzzleGame, x, y):
+        puzzleGame.handleGameViewClick(x, y)
+
     def draw(self, puzzleGame):
         surface    = puzzleGame.surface
         gameGrid   = puzzleGame.gameGrid
@@ -30,21 +33,6 @@ class GameView(BaseView):
         self.drawMenuBar(surface, clicks)
         self.drawBorder(surface)
         pygame.display.update()
-
-    def handleClick(self, puzzleGame, x, y):
-        if puzzleGame.clicks == 0:
-            return
-
-        rowcol = self.getClickRowCol(puzzleGame, x, y)
-        if rowcol:
-            puzzleGame.handleGridClick(*rowcol)
-
-    def getClickRowCol(self, puzzleGame, x, y):
-        surface  = puzzleGame.surface
-        gameGrid = puzzleGame.gameGrid
-
-        gameGridSizer = GameGridSizer(surface, gameGrid)
-        return gameGridSizer.getRowCol(x, y)
 
     def drawMenuBar(self, surface, clicks):
         gridX  = 0

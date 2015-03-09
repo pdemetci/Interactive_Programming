@@ -4,6 +4,7 @@ from game_grid import GameGrid
 from target_grid import TargetGrid
 from game_view import GameView
 from menu_view import MenuView
+from game_grid_sizer import GameGridSizer
 
 class PuzzleGame:
     GAME_WIDTH = 1200
@@ -57,6 +58,15 @@ class PuzzleGame:
 
     def handleClick(self, x, y):
         self.activeView.handleClick(self, x, y)
+
+    def handleGameViewClick(self, x, y):
+        if self.clicks == 0:
+            return
+
+        gameGridSizer = GameGridSizer(self.surface, self.gameGrid)
+        rowcol = gameGridSizer.getRowCol(x, y)
+        if rowcol:
+            self.handleGridClick(*rowcol)
 
     def handleGridClick(self, row, col):
         self.gameGrid.handleGridClick(row, col)
