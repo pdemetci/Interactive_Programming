@@ -3,5 +3,8 @@ class BaseView:
     def __init__(self):
         """ setup the view """
 
-    def draw(self, surface):
+    def draw(self, puzzleGame, surface):
         """ draw the view """
+
+    def handleClick(self, puzzleGame, x, y):
+        """ handle a click at position x, y """
