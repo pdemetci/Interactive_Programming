@@ -20,7 +20,7 @@ class PuzzleGame:
         self.done = True
 
         self.gameGrid = GameGrid(self.ROWS, self.COLS)
-        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 2)
+        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 10)
         self.clicks = self.MAX_CLICKS
         self.clickHistory = []
 

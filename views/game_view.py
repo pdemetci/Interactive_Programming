@@ -19,13 +19,19 @@ class GameView(BaseView):
     def handleClick(self, puzzleGame, x, y):
         surface = puzzleGame.surface
         gameGrid = puzzleGame.gameGrid
-        undoButtonRect = self.getUndoButtonRect(surface)
-        gameGridRect = self.getGameGridRect(surface, gameGrid)
 
-        if undoButtonRect.collidepoint(x, y):
+        if self.clickedUndo(surface, x, y):
             puzzleGame.undoGameGridClick()
-        elif gameGridRect.collidepoint(x, y):
+        elif self.clickedGameGrid(surface, gameGrid, x, y):
             puzzleGame.handleGameGridClick(x, y)
+            
+    def clickedUndo(self, surface, x, y):
+        undoButtonRect = self.getUndoButtonRect(surface)
+        return undoButtonRect.collidepoint(x, y)
+
+    def clickedGameGrid(self, surface, gameGrid, x, y):
+        gameGridRect = self.getGameGridRect(surface, gameGrid)
+        return gameGridRect.collidepoint(x, y)
 
     def draw(self, puzzleGame):
         surface    = puzzleGame.surface
@@ -39,8 +45,24 @@ class GameView(BaseView):
         self.gameGridFragment.draw(surface, gameGrid, gameGridSizer)
         self.targetGridFragment.draw(surface, targetGrid, targetGridSizer)
         self.drawMenuBar(surface, clicks)
+        self.drawDivider(surface)
         self.drawBorder(surface)
+        
         pygame.display.update()
+
+    def drawDivider(self, surface):
+        x0 = TARGET_GRID_WIDTH_RATIO * surface.get_width()
+        x1 = x0
+        y0 = MENU_BAR_HEIGHT_RATIO * surface.get_height()
+        y1 = surface.get_height()
+        width = 8
+
+        startPos = (x0, y0)
+        endPos = (x1, y1)
+
+        color = pygame.Color("green")
+
+        pygame.draw.line(surface, color, startPos, endPos, width)
 
     def drawMenuBar(self, surface, clicks):
         self.drawMenuBarBackground(surface)
