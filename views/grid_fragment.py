@@ -15,12 +15,12 @@ class GridFragment(BaseFragment):
                     6: pygame.Color("purple")
     }
 
-    def draw(self, surface, grid, cellGrid):
+    def draw(self, surface, grid, gridSizer):
         """ draws the target grid """
         for row in range(grid.rows):
             for col in range(grid.cols):
                 val = grid.get(row, col)
-                cell = cellGrid.getCellRect(row, col)
+                cell = gridSizer.getCellRect(row, col)
                 self.drawCell(surface, val, cell)
 
         pygame.display.update()

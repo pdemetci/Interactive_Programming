@@ -1,15 +1,22 @@
-from grid import Grid
+from random import randint
+from click_grid import ClickGrid
 
-class TargetGrid(Grid):
+class TargetGrid(ClickGrid):
     """ the target grid represents the goal state of the game grid """
 
-    def __init__(self, row, col):
+    def __init__(self, row, col, clicks):
         """ create the target grid """
         super(TargetGrid, self).__init__(row, col)
-    	self.fill_grid()
+        self.clicks = clicks
+    	self.fillGrid(clicks)
 
-    def fill_grid(self):
+    def fillGrid(self, clicks):
         """ fills the grid with the a random target state """
-    	for i in range(self.rows):
-    		for x in range(self.cols):
-    			self.set(i,x,2)
+        for i in range(clicks):
+            row, col = self.getRandRowCol()
+            self.handleGridClick(row, col)
+
+    def getRandRowCol(self):
+        row = randint(0, self.rows - 1)
+        col = randint(0, self.cols - 1) 
+        return (row, col)

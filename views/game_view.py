@@ -72,12 +72,12 @@ class GameView(BaseView):
         text = self.getUndoText()
         undoTextRect = self.getUndoTextRect(surface)
         undoButtonRect = self.getUndoButtonRect(surface)
-        surface.fill(pygame.Color("blue"), undoButtonRect)
+        surface.fill(pygame.Color("purple"), undoButtonRect)
         surface.blit(text, undoTextRect)
 
     def getUndoTextRect(self, surface):
-        font = pygame.font.SysFont("Arial", 40)
-        text = font.render("undo", True, pygame.Color("black"))
+        font = self.getFont()
+        text = self.getUndoText()
 
         textRect = text.get_rect()
         textRect.centery = 0.5 * MENU_BAR_HEIGHT_RATIO * surface.get_height()
@@ -86,7 +86,7 @@ class GameView(BaseView):
 
     def getUndoButtonRect(self, surface):
         textRect = self.getUndoTextRect(surface)
-        undoRect = textRect.inflate(5, 5)
+        undoRect = textRect.inflate(10, 6)
         return undoRect
 
     def getGameGridRect(self, surface, gameGrid):
@@ -94,7 +94,7 @@ class GameView(BaseView):
         return gameGridSizer.getGridRect()
 
     def drawMenuBarClicks(self, surface, clicks):
-        font = pygame.font.SysFont("Arial", 40)
+        font = self.getFont()
         text = font.render(str(clicks), True, pygame.Color("black"))
 
         textRect = text.get_rect()
