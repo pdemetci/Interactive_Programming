@@ -23,8 +23,6 @@ class GridFragment(BaseFragment):
                 cell = gridSizer.getCellRect(row, col)
                 self.drawCell(surface, val, cell)
 
-        pygame.display.update()
-
     def drawCell(self, surface, val, rect):
         color = self.getColor(val)
         surface.fill(color, rect)
