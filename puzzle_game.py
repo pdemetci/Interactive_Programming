@@ -20,7 +20,7 @@ class PuzzleGame:
         self.done = True
 
         self.gameGrid = GameGrid(self.ROWS, self.COLS)
-        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 10)
+        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 1)
         self.clicks = self.MAX_CLICKS
         self.clickHistory = []
 
@@ -73,11 +73,10 @@ class PuzzleGame:
         rowcol = gameGridSizer.getRowCol(x, y)
         if rowcol:
             self.clickHistory.append(rowcol)
-            self.handleGridClick(*rowcol)
+            self.gameGrid.handleGridClick(*rowcol)
+            self.clicks = self.clicks - 1
+            self.checkWin()
 
-    def handleGridClick(self, row, col):
-        self.gameGrid.handleGridClick(row, col)
-        self.clicks = self.clicks - 1
         self.drawGame()
 
     def undoGameGridClick(self):
@@ -92,3 +91,8 @@ class PuzzleGame:
     def switchView(self, nextView):
         """ change the active view """
         self.activeView = nextView
+
+    def checkWin(self):
+        if self.gameGrid == self.targetGrid:
+            # You Won!
+            self.stop()

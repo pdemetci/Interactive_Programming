@@ -17,3 +17,11 @@ class Grid(object):
 		""" set the cell at the row and column to val """
 		self.matrix[row][col] = val
 
+	def __eq__(self, other):
+		return isinstance(self, Grid) and self.matrix == other.matrix
+
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
+	def __str__(self):
+		return str(self.matrix)
