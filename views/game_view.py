@@ -16,7 +16,9 @@ class GameView(BaseView):
         self.gameGridFragment = GridFragment()
         self.targetGridFragment = GridFragment()
 
-    def handleClick(self, controller, surface, gameGrid, x, y):
+    def handleClick(self, controller, puzzleGame, x, y):
+        surface = puzzleGame.surface
+        gameGrid = puzzleGame.gameGrid
         if self.clickedUndo(surface, x, y):
             controller.undoGameGridClick()
         elif self.clickedGameGrid(surface, gameGrid, x, y):

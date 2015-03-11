@@ -10,9 +10,10 @@ class MenuController:
 		if event.type == KEYDOWN:
 			if event.key == K_1:
 				self.puzzleGame.switchView(self.puzzleGame.gameView)
+				self.puzzleGame.drawGame()
 
 			if event.key == K_2:
 				pass
 
 			if event.key == K_3 or K_ESCAPE:
-				pygame.quit()
+				self.puzzleGame.done = True

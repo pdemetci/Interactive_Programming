@@ -1,27 +1,54 @@
 .
 ├── controllers
-│   ├── base_controller.py     --> superclass of all controllers; sends events to event manager
-│   └── mouse_controller.py    --> child class of base_controller; handles mouse events
+│   ├── base_controller.py
+│   ├── base_controller.pyc
+│   ├── game_state_controller.py
+│   ├── game_state_controller.pyc
+│   ├── mouse_controller.py
+│   ├── mouse_controller.pyc
+│   ├── video_controller.py
+│   └── video_controller.pyc
 ├── files.txt
-├── main.py                    --> the main file that starts the game
+├── main.py
 ├── models
-│   ├── base_event.py          --> superclass of all events 
-│   ├── click_event.py         --> child class of base_event; keeps track click locations
-│   ├── event_manager.py       --> passes messages between the controllers, models, and views
-│   ├── event_manager.pyc
-│   ├── game_grid.py           --> child class of grid; keeps track of the game colors
-│   ├── grid.py                --> superclass of the grids
+│   ├── click_grid.py
+│   ├── click_grid.pyc
+│   ├── game_grid.py
+│   ├── game_grid.pyc
+│   ├── grid.py
 │   ├── grid.pyc
-│   └── target_grid.py         --> child class of grid; keeps track of the goal colors
-├── puzzle_game.py             --> holds all the models, views, and controllers
+│   ├── target_grid.py
+│   └── target_grid.pyc
+├── puzzle_game.py
 ├── puzzle_game.pyc
 ├── README.md
+├── setup.py
+├── setup.pyc
 ├── test
-│   ├── event_manger_test.py
+│   ├── game_grid_test.py
 │   ├── grid_test.py
 │   ├── test_helper.py
 │   └── test_helper.pyc
 └── views
-    ├── base_fragment.py       --> a view within a view
-    ├── base_view.py           --> superclass of views; displays the game
-    └── game_grid_fragment.py  --> child class of base_fragment; displays the game grid
+    ├── base_fragment.py
+    ├── base_fragment.pyc
+    ├── base_view.py
+    ├── base_view.pyc
+    ├── cell_grid.pyc
+    ├── game_grid_sizer.py
+    ├── game_grid_sizer.pyc
+    ├── game_view.py
+    ├── game_view.pyc
+    ├── grid_fragment.py
+    ├── grid_fragment.pyc
+    ├── grid_sizer.py
+    ├── grid_sizer.pyc
+    ├── grid_view.py
+    ├── measurements.py
+    ├── measurements.pyc
+    ├── menu_view.py
+    ├── menu_view.pyc
+    ├── target_grid_sizer.py
+    └── target_grid_sizer.pyc
+
+4 directories, 47 files

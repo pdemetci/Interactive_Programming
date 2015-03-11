@@ -27,7 +27,8 @@ class PuzzleGame:
         self.menuController = MenuController(self)
         self.controllers = [self.mouseController,
                             self.videoController,
-                            self.gameStateController,self.menuController]
+                            self.gameStateController,
+                            self.menuController]
 
         self.gameGrid = GameGrid(self.ROWS, self.COLS)
         self.targetGrid = TargetGrid(self.ROWS, self.COLS, 3)

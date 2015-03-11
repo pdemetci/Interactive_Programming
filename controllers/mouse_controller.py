@@ -14,7 +14,7 @@ class MouseController(BaseController):
             x, y = event.pos
             surface = self.puzzleGame.surface
             gameGrid = self.puzzleGame.gameGrid
-            self.puzzleGame.activeView.handleClick(self, surface, gameGrid, x, y)
+            self.puzzleGame.activeView.handleClick(self, self.puzzleGame, x, y)
            
     def handleGameGridClick(self, x, y):
         if self.puzzleGame.clicks == 0:

@@ -57,7 +57,7 @@ class MenuView(BaseView):
 		self.screen.blit(self.item4_3.text, (self.item4_3.x, self.item4.y))
 		pygame.display.update()
 
-	def handleClick(self, x, y):
+	def handleClick(self, controller, puzzleGame, x, y):
 		pass
 def centerWidth(widthOuter, widthInner):
 	"""Returns the x location of the upper left corner of the item you want to center horizontally in a larger item

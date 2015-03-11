@@ -6,5 +6,5 @@ class BaseView:
     def draw(self, puzzleGame, surface):
         """ draw the view """
 
-    def handleClick(self, puzzleGame, x, y):
+    def handleClick(self, controller, puzzleGame, x, y):
         """ handle a click at position x, y """
