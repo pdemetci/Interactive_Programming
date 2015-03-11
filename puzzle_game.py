@@ -8,6 +8,7 @@ from game_grid_sizer import GameGridSizer
 from mouse_controller import MouseController
 from video_controller import VideoController
 from game_state_controller import GameStateController
+from menu_controller import MenuController
 
 class PuzzleGame:
     GAME_WIDTH = 1200
@@ -23,9 +24,10 @@ class PuzzleGame:
         self.mouseController = MouseController(self)
         self.videoController = VideoController(self)
         self.gameStateController = GameStateController(self)
+        self.menuController = MenuController(self)
         self.controllers = [self.mouseController,
                             self.videoController,
-                            self.gameStateController]
+                            self.gameStateController,self.menuController]
 
         self.gameGrid = GameGrid(self.ROWS, self.COLS)
         self.targetGrid = TargetGrid(self.ROWS, self.COLS, 3)
@@ -41,7 +43,7 @@ class PuzzleGame:
     def start(self):
         """ start the game """
         self.gameStateController.start()
-        self.switchView(self.gameView)
+        self.switchView(self.menuView)
         self.drawGame()
 
         while not self.gameStateController.done:
