@@ -3,8 +3,8 @@ import pygame
 from base_view import BaseView
 from grid_fragment import GridFragment
 from grid_sizer import GridSizer
-from game_grid_sizer import GameGridSizer
 from target_grid_sizer import TargetGridSizer
+from game_grid_sizer import GameGridSizer
 from measurements import *
 
 class GameView(BaseView):
@@ -16,14 +16,11 @@ class GameView(BaseView):
         self.gameGridFragment = GridFragment()
         self.targetGridFragment = GridFragment()
 
-    def handleClick(self, puzzleGame, x, y):
-        surface = puzzleGame.surface
-        gameGrid = puzzleGame.gameGrid
-
+    def handleClick(self, controller, surface, gameGrid, x, y):
         if self.clickedUndo(surface, x, y):
-            puzzleGame.undoGameGridClick()
+            controller.undoGameGridClick()
         elif self.clickedGameGrid(surface, gameGrid, x, y):
-            puzzleGame.handleGameGridClick(x, y)
+            controller.handleGameGridClick(x, y)
             
     def clickedUndo(self, surface, x, y):
         undoButtonRect = self.getUndoButtonRect(surface)
