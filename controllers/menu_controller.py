@@ -4,12 +4,14 @@ import setup
 import pygame
 from pygame.locals import *
 from menu_view import MenuView
+from howto_view import HowtoView
 
 class MenuController:
 	def __init__(self, puzzleGame):
 		self.puzzleGame=puzzleGame
 
 	def handleEvent(self, event):
+		print type(self.puzzleGame.activeView)
 		if type(self.puzzleGame.activeView) == MenuView:
 			if event.type == KEYDOWN:
 				if event.key == K_1:
@@ -27,3 +29,4 @@ class MenuController:
 			if event.type == KEYDOWN:
 				if event.key== K_ESCAPE:
 					self.puzzleGame.switchView(self.puzzleGame.menuView)
+					self.puzzleGame.drawGame()

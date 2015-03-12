@@ -2,7 +2,7 @@ import sys, pygame, os, random, time
 from PIL import Image
 from pygame.locals import *
 from base_view import BaseView
-from menu_controller import MenuController
+
 
 class HowtoItem:
 	def __init__(self, text, color, menuWidth, menuHeight, dy = 0):

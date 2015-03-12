@@ -1,4 +1,4 @@
-class BaseView:
+class BaseView(object):
     
     def __init__(self):
         """ setup the view """
