@@ -1,5 +1,4 @@
 import pygame
-
 from game_grid import GameGrid
 from target_grid import TargetGrid
 from game_view import GameView
@@ -9,6 +8,7 @@ from mouse_controller import MouseController
 from video_controller import VideoController
 from game_state_controller import GameStateController
 from menu_controller import MenuController
+from howto_view import HowtoView
 
 class PuzzleGame:
     GAME_WIDTH = 1200
@@ -37,6 +37,7 @@ class PuzzleGame:
 
         self.gameView = GameView()
         self.menuView = MenuView()
+        self.howtoView = HowtoView()
         self.activeView = None
 
         self.surface = pygame.display.set_mode((self.GAME_WIDTH, self.GAME_HEIGHT), pygame.RESIZABLE)

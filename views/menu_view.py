@@ -1,7 +1,8 @@
+print "In MenuView"
 import sys, pygame, os
 from pygame.locals import *
 from base_view import BaseView
-from menu_key_controller import MenuController
+from menu_controller import MenuController
 
 class menuOption:
 	def __init__(self, text, color, menuWidth, menuHeight):
@@ -26,35 +27,30 @@ class menuTitle:
 		self.y = centerHeight(menuHeight, self.height)
 
 class MenuView(BaseView):
-	def __init__(self):
-		self.background = (40,40,40)
-		self.width= 640
-		self.height = 480
+		
+	def draw(self, puzzleGame):	
 
-	def Screen(self):
+		self.width=puzzleGame.surface.get_width()
+		self.height=puzzleGame.surface.get_height()
+		
 		self.item1= menuTitle("grid",(255,140,0), self.width, self.height-300)
 		self.item2 = menuOption("how-to",(250,250,210), self.width, self.height+65)
 		self.item2_1= menuOption("2",(255,255,0), self.width-300, self.height+65)
 		self.item3 = menuOption("start",(250,250,210), self.width, self.height - 2*self.item2.height+65)
 		self.item3_2= menuOption("1",(124,252,0), self.width-300, self.height+65)
 		self.item4 = menuOption("quit", (250,250,210),self.width, self.height + 2*self.item2.height+65)
-		self.item4_3= menuOption("3",(255,97,3), self.width-300, self.height+65)		
-		
-	def draw(self, puzzleGame):	
+		self.item4_3= menuOption("3",(255,97,3), self.width-300, self.height+65)	
+
 		os.environ['SDL_VIDEO_CENTERED'] = '1'  #centers the starting postion of the window
-		self.Screen()
-		self.screen = pygame.display.set_mode((self.width, self.height))
 		pygame.display.update()
-		self.Screen()
-		self.screen = pygame.display.set_mode((self.width, self.height))
-		self.screen.fill((40,40,40))
-		self.screen.blit(self.item1.text, (self.item1.x, self.item1.y))	
-		self.screen.blit(self.item2.text, (self.item1.x, self.item2.y))
-		self.screen.blit(self.item3.text, (self.item1.x, self.item3.y))
-		self.screen.blit(self.item4.text, (self.item1.x, self.item4.y))
-		self.screen.blit(self.item2_1.text, (self.item2_1.x, self.item2.y))
-		self.screen.blit(self.item3_2.text, (self.item3_2.x, self.item3.y))
-		self.screen.blit(self.item4_3.text, (self.item4_3.x, self.item4.y))
+		puzzleGame.surface.fill((40,40,40))
+		puzzleGame.surface.blit(self.item1.text, (self.item1.x, self.item1.y))	
+		puzzleGame.surface.blit(self.item2.text, (self.item1.x, self.item2.y))
+		puzzleGame.surface.blit(self.item3.text, (self.item1.x, self.item3.y))
+		puzzleGame.surface.blit(self.item4.text, (self.item1.x, self.item4.y))
+		puzzleGame.surface.blit(self.item2_1.text, (self.item2_1.x, self.item2.y))
+		puzzleGame.surface.blit(self.item3_2.text, (self.item3_2.x, self.item3.y))
+		puzzleGame.surface.blit(self.item4_3.text, (self.item4_3.x, self.item4.y))
 		pygame.display.update()
 
 	def handleClick(self, controller, puzzleGame, x, y):

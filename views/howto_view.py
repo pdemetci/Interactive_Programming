@@ -1,19 +1,12 @@
 import sys, pygame, os, random, time
 from PIL import Image
 from pygame.locals import *
-
-class HowtoModel():
-
-	def __init__(self):
-		self.backgroundColor = (40,40,40)
-		self.menu = HowtoGUI()
-		self.screenstate = "MenuScreen"	#state of the screen size (default vs fullscreen)
-		self.gamestate = "Menuing"	#state of the game (in menu vs in game)
-		self.timestart = time.time()
+from base_view import BaseView
+from menu_controller import MenuController
 
 class HowtoItem:
 	def __init__(self, text, color, menuWidth, menuHeight, dy = 0):
-		self.font = pygame.font.Font('neuropol.ttf',16)
+		self.font = pygame.font.SysFont('Arial',16)
 		self.color = color
 		self.text = self.font.render(text, True, self.color)
 		self.size = self.text.get_size()
@@ -24,7 +17,7 @@ class HowtoItem:
 
 class menuTitle:
 	def __init__(self, text, color, menuWidth, menuHeight, dy = 0):
-		self.font = pygame.font.Font('Architect.ttf',80)
+		self.font = pygame.font.SysFont('Arial',80)
 		self.color = color
 		self.text = self.font.render(text, True, self.color)
 		self.size = self.text.get_size()
@@ -33,18 +26,14 @@ class menuTitle:
 		self.x = centerWidth(menuWidth, self.width)
 		self.y = centerHeight(menuHeight, self.height) + dy
 
-class HowtoGUI:
-	def __init__(self, width = 640, height = 480):
-		self.width = width
-		self.height = height
-		self.font = pygame.font.Font('neuropol.ttf',40)
-		self.display_resolution = pygame.display.Info()
+class HowtoView(BaseView):
 
-	def Screen(self):
-		"""Encodes the screenstate of 
+	def draw(self, puzzleGame):	
+		"""Draws the howto menu
 		"""
-		self.width = 640
-		self.height = 480
+
+		self.width=puzzleGame.surface.get_width()
+		self.height=puzzleGame.surface.get_height()
 
 		self.item1= menuTitle("grid",(255,140,0), self.width, self.height-300)
 		self.item2 = HowtoItem("grid is a puzzle game.",(250,250,210), self.width, self.height+65)
@@ -52,49 +41,22 @@ class HowtoGUI:
 		self.item4 = HowtoItem("cells. Each time you click a cell, the color and number of  ",(250,250,210), self.width, self.height+65)
 		self.item5 = HowtoItem("that cell and the 4 cells change. You have limited clicks. ",(250,250,210), self.width, self.height+65)
 		self.item6 = HowtoItem("Good luck!",(250,250,210), self.width, self.height+65)
-
-class HowtoView:
-	def __init__(self, model, controller):
-		self.model = model
-		self.controller = controller
-
-	def drawMenu(self):	
-		"""Draws the main menu
-		"""
 		os.environ['SDL_VIDEO_CENTERED'] = '1'  #centers the starting postion of the window
 		
-		self.model.menu.Screen()
-		self.screen = pygame.display.set_mode((self.model.menu.width, self.model.menu.height))
-
-		self.screen.fill(model.backgroundColor)
+		puzzleGame.surface.fill((40,40,40))
 
 		pygame.display.update()
 
-		if self.model.screenstate == 'Minimized' and self.model.menu.width != 400:
-			self.model.menu.Screen()
-			self.screen = pygame.display.set_mode((self.model.menu.width, self.model.menu.height))
-
-
-		self.screen.fill((40,40,40))
-
-		self.screen.blit(self.model.menu.item1.text, (self.model.menu.item1.x, self.model.menu.item1.y))	#creates the menu texts
-		self.screen.blit(self.model.menu.item2.text, (self.model.menu.item1.x-200, self.model.menu.item2.y-60))
-		self.screen.blit(self.model.menu.item3.text, (self.model.menu.item1.x-200, self.model.menu.item2.y-20))
-		self.screen.blit(self.model.menu.item4.text, (self.model.menu.item1.x-200, self.model.menu.item2.y))
-		self.screen.blit(self.model.menu.item5.text, (self.model.menu.item1.x-200, self.model.menu.item2.y+20))
-		self.screen.blit(self.model.menu.item6.text, (self.model.menu.item1.x-200, self.model.menu.item2.y+60))
+		puzzleGame.surface.blit(self.item1.text, (self.item1.x, self.item1.y))	#creates the menu texts
+		puzzleGame.surface.blit(self.item2.text, (self.item1.x-200, self.item2.y-60))
+		puzzleGame.surface.blit(self.item3.text, (self.item1.x-200, self.item2.y-20))
+		puzzleGame.surface.blit(self.item4.text, (self.item1.x-200, self.item2.y))
+		puzzleGame.surface.blit(self.item5.text, (self.item1.x-200, self.item2.y+20))
+		puzzleGame.surface.blit(self.item6.text, (self.item1.x-200, self.item2.y+60))
 		pygame.display.update()
 
-class MenuController:
-	def __init__(self,model):
-		self.model = model
-
-	def handle_menu_key_event(self, event):
-		"""Handles all of the key events while in the main menu
-		"""
-		if event.type == KEYDOWN:
-			if event.key == K_ESCAPE:
-				pygame.quit()
+	def handleClick(self, controller, puzzleGame, x, y):
+		pass
 
 def centerWidth(widthOuter, widthInner):
 	"""Returns the x location of the upper left corner of the item you want to center horizontally in a larger item
@@ -122,22 +84,20 @@ def centerObject(width_outter, height_outter, width_inner, height_inner):
 	return upper_left_corner
 
 
-pygame.init()
-fpsClock= pygame.time.Clock()
-pygame.font.init()
+# pygame.init()
+# fpsClock= pygame.time.Clock()
+# pygame.font.init()
 
-model = HowtoModel()
-controller = MenuController(model)
-view = HowtoView(model,controller)
+# controller = MenuController
+# view = HowtoView()
 
-running = True
+# running = True
 
-view.drawMenu()
-while running:
-	while model.gamestate == 'Menuing' and running:
-		for event in pygame.event.get():
- 			if event.type == pygame.QUIT:
- 				running = False
- 			if event.type == KEYDOWN:
- 				controller.handle_menu_key_event(event)
- 				view.drawMenu()
+# view.draw()
+# while running:
+# 	for event in pygame.event.get():
+# 		if event.type == pygame.QUIT:
+# 			running = False
+# 		if event.type == KEYDOWN:
+# 			controller.handle_menu_key_event(event)
+# 			view.draw()
