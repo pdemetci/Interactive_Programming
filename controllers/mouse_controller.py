@@ -26,6 +26,7 @@ class MouseController(BaseController):
             self.puzzleGame.clickHistory.append(rowcol)
             self.puzzleGame.gameGrid.handleGridClick(*rowcol)
             self.puzzleGame.clicks = self.puzzleGame.clicks - 1
+            self.puzzleGame.drawGame()
             self.puzzleGame.checkWin()
 
         self.puzzleGame.drawGame()

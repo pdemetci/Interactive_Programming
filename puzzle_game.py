@@ -30,8 +30,8 @@ class PuzzleGame:
                             self.gameStateController,
                             self.menuController]
 
-        self.gameGrid = GameGrid(self.ROWS, self.COLS)
-        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 3)
+        self.gameGrid = None
+        self.targetGrid = None
         self.clicks = self.MAX_CLICKS
         self.clickHistory = []
 
@@ -44,6 +44,8 @@ class PuzzleGame:
 
     def start(self):
         """ start the game """
+        self.gameGrid = GameGrid(self.ROWS, self.COLS)
+        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 3)
         self.gameStateController.start()
         self.switchView(self.menuView)
         self.drawGame()
@@ -51,6 +53,9 @@ class PuzzleGame:
         while not self.gameStateController.done:
             self.main()
             pygame.time.wait(50)
+
+    def stop(self):
+        self.gameStateController.stop()
 
     def drawGame(self):
         self.activeView.draw(self)
@@ -68,4 +73,5 @@ class PuzzleGame:
     def checkWin(self):
         if self.gameGrid == self.targetGrid:
             # You Won!
-            self.gameStateController.stop()
+            pygame.time.wait(1000)
+            self.start()

@@ -11,7 +11,6 @@ class MenuController:
 		self.puzzleGame=puzzleGame
 
 	def handleEvent(self, event):
-		print type(self.puzzleGame.activeView)
 		if type(self.puzzleGame.activeView) == MenuView:
 			if event.type == KEYDOWN:
 				if event.key == K_1:
@@ -25,7 +24,7 @@ class MenuController:
 				elif event.key == K_3 or event.key== K_ESCAPE:
 					self.puzzleGame.stop()
 
-		if type(self.puzzleGame.activeView) == HowtoView:
+		elif type(self.puzzleGame.activeView) == HowtoView:
 			if event.type == KEYDOWN:
 				if event.key== K_ESCAPE:
 					self.puzzleGame.switchView(self.puzzleGame.menuView)
