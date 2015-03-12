@@ -32,8 +32,8 @@ class PuzzleGame:
 
         self.gameGrid = None
         self.targetGrid = None
-        self.clicks = self.MAX_CLICKS
-        self.clickHistory = []
+        self.clicks = None
+        self.clickHistory = None
 
         self.gameView = GameView()
         self.menuView = MenuView()
@@ -45,7 +45,10 @@ class PuzzleGame:
     def start(self):
         """ start the game """
         self.gameGrid = GameGrid(self.ROWS, self.COLS)
-        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 3)
+        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 4)
+        self.clicks = self.MAX_CLICKS
+        self.clickHistory = []
+
         self.gameStateController.start()
         self.switchView(self.menuView)
         self.drawGame()

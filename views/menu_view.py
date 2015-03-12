@@ -1,4 +1,3 @@
-print "In MenuView"
 import sys, pygame, os
 from pygame.locals import *
 from base_view import BaseView

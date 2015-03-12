@@ -59,7 +59,7 @@ class GameView(BaseView):
         startPos = (x0, y0)
         endPos = (x1, y1)
 
-        color = pygame.Color("green")
+        color = pygame.Color("grey")
 
         pygame.draw.line(surface, color, startPos, endPos, width)
 

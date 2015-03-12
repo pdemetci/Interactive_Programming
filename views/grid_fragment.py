@@ -9,10 +9,10 @@ class GridFragment(BaseFragment):
                     0: pygame.Color("white"),
                     1: pygame.Color("red"),
                     2: pygame.Color("orange"),
-                    3: pygame.Color("yellow"),
-                    4: pygame.Color("green"),
-                    5: pygame.Color("blue"),
-                    6: pygame.Color("purple")
+                    3: pygame.Color("green"),
+                    4: pygame.Color("blue"),
+                    5: pygame.Color("purple"),
+                    6: pygame.Color("black")
     }
 
     def draw(self, surface, grid, gridSizer):
