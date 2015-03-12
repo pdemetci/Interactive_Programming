@@ -18,9 +18,12 @@ class PuzzleGame:
     COLS = 5
 
     MAX_CLICKS = 10
+    TARGET_CLICKS = 4
 
     def __init__(self):
         """ create the view and controllers """
+
+        # setup the controllers
         self.mouseController = MouseController(self)
         self.videoController = VideoController(self)
         self.gameStateController = GameStateController(self)
@@ -30,11 +33,13 @@ class PuzzleGame:
                             self.gameStateController,
                             self.menuController]
 
+        # setup the models
         self.gameGrid = None
         self.targetGrid = None
         self.clicks = None
         self.clickHistory = None
 
+        # setup the views
         self.gameView = GameView()
         self.menuView = MenuView()
         self.howtoView = HowtoView()
@@ -44,23 +49,33 @@ class PuzzleGame:
 
     def start(self):
         """ start the game """
+
+        # generate new game and target grids
         self.gameGrid = GameGrid(self.ROWS, self.COLS)
-        self.targetGrid = TargetGrid(self.ROWS, self.COLS, 4)
+        self.targetGrid = TargetGrid(self.ROWS, self.COLS, self.TARGET_CLICKS)
+
+        # clear the click history
         self.clicks = self.MAX_CLICKS
         self.clickHistory = []
 
+        # start the game
         self.gameStateController.start()
+
+        # make the menuView active
         self.switchView(self.menuView)
         self.drawGame()
 
+        # run the main loop
         while not self.gameStateController.done:
             self.main()
             pygame.time.wait(50)
 
     def stop(self):
+        """ stop the game """
         self.gameStateController.stop()
 
     def drawGame(self):
+        """ draw the game """
         self.activeView.draw(self)
 
     def main(self):
@@ -74,6 +89,7 @@ class PuzzleGame:
         self.activeView = nextView
 
     def checkWin(self):
+        """ determine if the game is over """
         if self.gameGrid == self.targetGrid:
             # You Won!
             pygame.time.wait(1000)

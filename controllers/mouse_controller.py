@@ -17,24 +17,34 @@ class MouseController(BaseController):
             self.puzzleGame.activeView.handleClick(self, self.puzzleGame, x, y)
            
     def handleGameGridClick(self, x, y):
+        """ handle clicks that occur in the GameGrid """
+
+        # do nothing if there are not clicks left
         if self.puzzleGame.clicks == 0:
             return
 
+        # get the (row, col) location of the click
         gameGridSizer = GameGridSizer(self.puzzleGame.surface, self.puzzleGame.gameGrid)
         rowcol = gameGridSizer.getRowCol(x, y)
+
+        # if in bounds, react to the click
         if rowcol:
             self.puzzleGame.clickHistory.append(rowcol)
             self.puzzleGame.gameGrid.handleGridClick(*rowcol)
             self.puzzleGame.clicks = self.puzzleGame.clicks - 1
             self.puzzleGame.drawGame()
             self.puzzleGame.checkWin()
-
-        self.puzzleGame.drawGame()
+        else:
+            self.puzzleGame.drawGame()
 
     def undoGameGridClick(self):
+        """ undo a grid click """
+
+        # check if there have been previous clicks
         if not self.puzzleGame.clickHistory:
             return
 
+        # get the last click position and undo it
         lastClick = self.puzzleGame.clickHistory.pop() 
         self.puzzleGame.gameGrid.undoGridClick(*lastClick)
         self.puzzleGame.clicks = self.puzzleGame.clicks + 1

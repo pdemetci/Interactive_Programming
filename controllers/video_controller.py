@@ -8,6 +8,7 @@ class VideoController(BaseController):
         self.puzzleGame = puzzleGame
 
     def handleEvent(self, event):
+        """ react to VIDEORESIZE event """
         if event.type == pygame.VIDEORESIZE:
             wh = event.w, event.h
             self.puzzleGame.surface = pygame.display.set_mode(wh, pygame.RESIZABLE)

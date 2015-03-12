@@ -18,10 +18,13 @@ class Grid(object):
 		self.matrix[row][col] = val
 
 	def __eq__(self, other):
+		""" determine if two grids are equal """
 		return isinstance(self, Grid) and self.matrix == other.matrix
 
 	def __ne__(self, other):
+		""" determine if two grids are not equal """ 
 		return not self.__eq__(other)
 
 	def __str__(self):
+		""" convert the grid to string """
 		return str(self.matrix)

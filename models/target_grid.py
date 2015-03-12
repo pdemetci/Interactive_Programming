@@ -17,6 +17,7 @@ class TargetGrid(ClickGrid):
             self.handleGridClick(row, col)
 
     def getRandRowCol(self):
+        """ gets a random row, column tuple in the grid's bounds """
         row = randint(0, self.rows - 1)
         col = randint(0, self.cols - 1) 
         return (row, col)

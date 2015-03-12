@@ -15,6 +15,7 @@ class GridSizer(object):
         self.cellHeight = self.height / float(self.rows)
 
     def getGridRect(self):
+        """ get the grid's rectangle """
         return self.rect
 
     def getCellRect(self, row, col):
@@ -26,6 +27,7 @@ class GridSizer(object):
         return pygame.Rect(cellX0, cellY0, self.cellWidth, self.cellHeight)
 
     def getRowCol(self, pixelX, pixelY):
+        """ get the (row, col) coordinate for the given (x, y) location """
         x0, y0 = self.rect.topleft
 
         if self.outOfBounds(pixelX, pixelY):
@@ -40,4 +42,5 @@ class GridSizer(object):
         return (row, col)
 
     def outOfBounds(self, px, py):
+        """ check if the pixel location is in bounds """
         return not self.rect.collidepoint(px, py)

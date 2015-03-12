@@ -16,7 +16,7 @@ class GridFragment(BaseFragment):
     }
 
     def draw(self, surface, grid, gridSizer):
-        """ draws the target grid """
+        """ draws the grid fragment """
         for row in range(grid.rows):
             for col in range(grid.cols):
                 val = grid.get(row, col)
@@ -24,10 +24,12 @@ class GridFragment(BaseFragment):
                 self.drawCell(surface, val, cell)
 
     def drawCell(self, surface, val, rect):
+        """ draw individual cells """
         color = self.getColor(val)
         surface.fill(color, rect)
         pygame.draw.rect(surface, self.BORDER_COLOR, rect, self.CELL_BORDER)
 
     def getColor(self, colorVal):
+        """ get the corresponding color to a cell value """
         return self.colorDict[colorVal]
      

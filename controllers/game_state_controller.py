@@ -9,11 +9,14 @@ class GameStateController(BaseController):
         self.done = True
 
     def start(self):
+        """ start the game """
         self.done = False
 
     def stop(self):
+        """ stop the game """
         self.done = True
 
     def handleEvent(self, event):
+        """ react to QUIT event """
         if event.type == pygame.QUIT:
             self.stop()

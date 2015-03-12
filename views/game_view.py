@@ -17,6 +17,7 @@ class GameView(BaseView):
         self.targetGridFragment = GridFragment()
 
     def handleClick(self, controller, puzzleGame, x, y):
+        """ react to a click """
         surface = puzzleGame.surface
         gameGrid = puzzleGame.gameGrid
         if self.clickedUndo(surface, x, y):
@@ -25,14 +26,17 @@ class GameView(BaseView):
             controller.handleGameGridClick(x, y)
             
     def clickedUndo(self, surface, x, y):
+        """ check if the undo button was clicked """
         undoButtonRect = self.getUndoButtonRect(surface)
         return undoButtonRect.collidepoint(x, y)
 
     def clickedGameGrid(self, surface, gameGrid, x, y):
+        """ check if the game grid was clicked """
         gameGridRect = self.getGameGridRect(surface, gameGrid)
         return gameGridRect.collidepoint(x, y)
 
     def draw(self, puzzleGame):
+        """ draw the game """
         surface    = puzzleGame.surface
         gameGrid   = puzzleGame.gameGrid
         targetGrid = puzzleGame.targetGrid
@@ -50,6 +54,7 @@ class GameView(BaseView):
         pygame.display.update()
 
     def drawDivider(self, surface):
+        """ draw the divider between grids """
         x0 = TARGET_GRID_WIDTH_RATIO * surface.get_width()
         x1 = x0
         y0 = MENU_BAR_HEIGHT_RATIO * surface.get_height()
@@ -64,11 +69,13 @@ class GameView(BaseView):
         pygame.draw.line(surface, color, startPos, endPos, width)
 
     def drawMenuBar(self, surface, clicks):
+        """ draw the top bar """
         self.drawMenuBarBackground(surface)
         self.drawMenuBarClicks(surface, clicks)
         self.drawMenuBarUndoButton(surface)
 
     def drawMenuBarBackground(self, surface):
+        """ draw the top bar background """
         gridX  = 0
         gridY  = 0
         width  = MENU_BAR_WIDTH_RATIO * surface.get_width()
@@ -81,15 +88,18 @@ class GameView(BaseView):
         pygame.draw.rect(surface, self.BORDER_COLOR, rect, self.BORDER_SIZE)
 
     def getFont(self):
+        """ get the writing font """
         font = pygame.font.SysFont("Arial", 40)
         return font
         
     def getUndoText(self):
+        """ get the undo text """
         font = self.getFont()
         text = font.render("undo", True, pygame.Color("black"))
         return text
 
     def drawMenuBarUndoButton(self, surface):
+        """ draw the undo button """
         text = self.getUndoText()
         undoTextRect = self.getUndoTextRect(surface)
         undoButtonRect = self.getUndoButtonRect(surface)
@@ -97,6 +107,7 @@ class GameView(BaseView):
         surface.blit(text, undoTextRect)
 
     def getUndoTextRect(self, surface):
+        """ get the undo text rectangle """
         font = self.getFont()
         text = self.getUndoText()
 
@@ -106,15 +117,18 @@ class GameView(BaseView):
         return textRect
 
     def getUndoButtonRect(self, surface):
+        """ get the undo button rectangle """
         textRect = self.getUndoTextRect(surface)
         undoRect = textRect.inflate(10, 6)
         return undoRect
 
     def getGameGridRect(self, surface, gameGrid):
+        """ get the game grid rectangle """
         gameGridSizer = GameGridSizer(surface, gameGrid)
         return gameGridSizer.getGridRect()
 
     def drawMenuBarClicks(self, surface, clicks):
+        """ write the number of clicks left """
         font = self.getFont()
         text = font.render(str(clicks), True, pygame.Color("black"))
 
@@ -124,6 +138,7 @@ class GameView(BaseView):
         surface.blit(text, textRect)
 
     def drawBorder(self, surface):
+        """ draw the view's  border """
         borderRect = surface.get_rect()
         pygame.draw.rect(surface, self.BORDER_COLOR, borderRect, 2 * self.BORDER_SIZE)
 
