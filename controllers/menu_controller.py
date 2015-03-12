@@ -1,6 +1,3 @@
-import sys
-sys.path.append("/home/pinar/Interactive_Programming/")
-import setup
 import pygame
 from pygame.locals import *
 from menu_view import MenuView
